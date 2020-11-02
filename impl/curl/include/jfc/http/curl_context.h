@@ -33,7 +33,9 @@ namespace jfc::http
     public:
         virtual request_shared_ptr make_get(const std::string &aURL,
             const std::string &aUserAgent,
-            const std::vector<std::string> &aHeaders) override;
+            const std::vector<std::string> &aHeaders,
+            const http::request::response_handler_functor &,
+            const http::request::failure_handler_functor &) override;
 
         virtual void main_update() override;
 

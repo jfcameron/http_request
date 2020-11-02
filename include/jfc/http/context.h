@@ -34,7 +34,9 @@ namespace jfc::http
         /// \brief create a GET request
         virtual request_shared_ptr make_get(const std::string &aURL,
             const std::string &aUserAgent,
-            const std::vector<std::string> &aHeaders) = 0;
+            const std::vector<std::string> &aHeaders,
+            const http::request::response_handler_functor &,
+            const http::request::failure_handler_functor &) = 0;
 
         virtual ~context() = default;
 

@@ -27,7 +27,9 @@ static size_t WriteMemoryCallback(unsigned char *const contentPointer,
 http::curl_request::curl_request(http::curl_context::worker_task_queue_ptr pWorkerTaskQueue,
     const std::string &aURL,
     const std::string &aUserAgent,
-    const std::vector<std::string> &aHeaders)
+    const std::vector<std::string> &aHeaders,
+    const http::request::response_handler_functor &aResponseHandler,
+    const http::request::failure_handler_functor &aFailureHandler)
 : m_pHandle([]()
     {
         auto handle = curl_easy_init();
@@ -41,6 +43,8 @@ http::curl_request::curl_request(http::curl_context::worker_task_queue_ptr pWork
         curl_easy_cleanup(p);
     })
 , m_pWorkerTaskQueue(pWorkerTaskQueue)
+, m_ResponseHandler(aResponseHandler)
+, m_FailureHandler(aFailureHandler)
 {
     curl_easy_setopt(m_pHandle.get(), CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
@@ -66,46 +70,38 @@ http::curl_request::curl_request(http::curl_context::worker_task_queue_ptr pWork
             curl_slist_free_all(p);
         }};
     }
-    
-    //curl_easy_setopt(curl_handle, CURLOPT_TIMEOUT, 10L); //TODO: provide param
+
+    //TODO: provide param for timeout
+    //curl_easy_setopt(curl_handle, CURLOPT_TIMEOUT, 10L);
 }
 
 void http::curl_request::fetch() 
 {
-    std::cout << "fetch\n";
-
     m_pWorkerTaskQueue->enqueue([&]()
     {
-        std::cout << "doing taskl\n";
+        m_bResponseLocked.test_and_set();
+        
+        m_ResponseBody.clear();
 
-        m_bResponseReady.clear();
-
-        response_data_type buffer;
-        curl_easy_setopt(m_pHandle.get(), CURLOPT_WRITEDATA, reinterpret_cast<void *>(&buffer)); 
+        curl_easy_setopt(m_pHandle.get(), CURLOPT_WRITEDATA, reinterpret_cast<void *>(&m_ResponseBody)); 
         
-        const CURLcode curlResult = curl_easy_perform(m_pHandle.get());
+        if (const auto error = curl_easy_perform(m_pHandle.get()))
+        {
+            //TODO: be more precise: switch or map from curl codes to enum class values
+            m_RequestError = error::unhandled_error;
+        }
+        else m_RequestError = error::none;
         
-        //TODO: handle failure
-        m_Response = buffer;
-        
-        m_bResponseReady.test_and_set();
+        m_bResponseLocked.clear();
     });
-
-    // call appropriate response functor
-    //if (curlResult == CURLE_OK) aHandler(buffer);
-    //else aFailedHandler();
 }
 
 void http::curl_request::main_update()
 {
-    if (m_bResponseReady.test_and_set())
+    if (!m_bResponseLocked.test_and_set())
     {
-        //TODO: need to param it
-        //m_SuccessfulResponseHandler(m_Response);
-
-        std::string blar(m_Response.begin(), m_Response.end());
-
-        std::cout << blar << "\n";
+        if (m_RequestError == error::none) m_ResponseHandler(m_ResponseBody);
+        else m_FailureHandler(m_RequestError);
     }
 }
 

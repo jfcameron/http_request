@@ -23,15 +23,22 @@ namespace jfc::http
         using curl_linked_list_ptr_type = std::shared_ptr<curl_slist>;
 
     private:
-        std::atomic_flag m_bResponseReady = ATOMIC_FLAG_INIT;
+        std::atomic_flag m_bResponseLocked;
 
         curl_handle_ptr_type m_pHandle;
 
         curl_linked_list_ptr_type m_pHeaders;
 
-        http::request::response_data_type m_Response;
-
         http::curl_context::worker_task_queue_ptr m_pWorkerTaskQueue;
+
+        //
+        http::request::response_data_type m_ResponseBody;
+
+        error m_RequestError = error::none;
+
+        http::request::response_handler_functor m_ResponseHandler;
+        
+        failure_handler_functor m_FailureHandler;
 
     public:
         virtual void fetch() override;
@@ -44,9 +51,9 @@ namespace jfc::http
         curl_request(http::curl_context::worker_task_queue_ptr pWorkerTaskQueue,
             const std::string &aURL, 
             const std::string &aUserAgent,
-            const std::vector<std::string> &aHeaders);
-
-        //get_handle();
+            const std::vector<std::string> &aHeaders,
+            const http::request::response_handler_functor &aResponseHandler,
+            const http::request::failure_handler_functor &);
 
     public:
         virtual ~curl_request() = default;

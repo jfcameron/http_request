@@ -21,10 +21,12 @@ http::curl_context::~curl_context()
 
 http::context::request_shared_ptr http::curl_context::make_get(const std::string &aURL,
     const std::string &aUserAgent,
-    const std::vector<std::string> &aHeaders)
+    const std::vector<std::string> &aHeaders,
+    const http::request::response_handler_functor &aResponseHandler,
+    const http::request::failure_handler_functor &aFailureHandler)
 {
     std::shared_ptr<http::curl_request> p(new jfc::http::curl_get(m_worker_task_queue,
-        aURL, aUserAgent, aHeaders));
+        aURL, aUserAgent, aHeaders, aResponseHandler, aFailureHandler));
 
     m_requests.push_back(std::weak_ptr<http::curl_request>(p));
 

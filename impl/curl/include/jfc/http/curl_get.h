@@ -18,7 +18,9 @@ namespace jfc::http
         curl_get(http::curl_context::worker_task_queue_ptr pWorkerTaskQueue,
             const std::string &aURL, 
             const std::string &aUserAgent,
-            const std::vector<std::string> &aHeaders);
+            const std::vector<std::string> &aHeaders,
+            const http::request::response_handler_functor &aResponseHandler,
+            const http::request::failure_handler_functor &);
 
         ~curl_get() = default;
     };
