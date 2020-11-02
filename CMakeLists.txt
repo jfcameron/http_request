@@ -14,6 +14,10 @@ option(JFC_BUILD_TESTS "Build unit tests" ON)
 
 FIND_PACKAGE(CURL REQUIRED)
 
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+    find_package(Threads REQUIRED)
+endif()
+
 jfc_project(library
     NAME "jfchttp"
     VERSION 0.0
@@ -38,14 +42,15 @@ jfc_project(library
 
     LIBRARIES
         ${CURL_LIBRARIES}
+        ${CMAKE_THREAD_LIBS_INIT}
 
 #    DEPENDENCIES
 #        "example"
 )
 
-#if (JFC_BUILD_DEMO)
-#    add_subdirectory(demo)
-#endif()
+if (JFC_BUILD_DEMO)
+    add_subdirectory(demo)
+endif()
 
 if (JFC_BUILD_TESTS)
     add_subdirectory(test)

@@ -3,9 +3,9 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 jfc_project(executable
-    NAME "jfchttprequest-demo"
+    NAME "jfchttp-demo"
     VERSION 1.0
-    DESCRIPTION "jfc-http_request demonstration"
+    DESCRIPTION "jfc-http demonstration"
     C++_STANDARD 17
     C_STANDARD 90
 
@@ -13,12 +13,12 @@ jfc_project(executable
         ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 
     PRIVATE_INCLUDE_DIRECTORIES
-        "${jfchttprequest_INCLUDE_DIRECTORIES}"
+        "${jfchttp_INCLUDE_DIRECTORIES}"
 
     LIBRARIES
-        "${jfchttprequest_LIBRARIES}"
+        "${jfchttp_LIBRARIES}"
 
     DEPENDENCIES
-        "jfchttprequest"
+        "jfchttp"
 )
 
