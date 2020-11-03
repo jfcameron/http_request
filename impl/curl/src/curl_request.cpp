@@ -27,6 +27,7 @@ static size_t WriteMemoryCallback(unsigned char *const contentPointer,
 http::curl_request::curl_request(http::curl_context::worker_task_queue_ptr pWorkerTaskQueue,
     const std::string &aURL,
     const std::string &aUserAgent,
+    const size_t aTimeoutMiliseconds,
     const std::vector<std::string> &aHeaders,
     const http::request::response_handler_functor &aResponseHandler,
     const http::request::failure_handler_functor &aFailureHandler)
@@ -71,8 +72,7 @@ http::curl_request::curl_request(http::curl_context::worker_task_queue_ptr pWork
         }};
     }
 
-    //TODO: provide param for timeout
-    //curl_easy_setopt(curl_handle, CURLOPT_TIMEOUT, 10L);
+    curl_easy_setopt(m_pHandle.get(), CURLOPT_TIMEOUT_MS, aTimeoutMiliseconds);
 }
 
 void http::curl_request::fetch() 

@@ -17,7 +17,7 @@ int main(int count, char **args)
     std::atomic<bool> bShouldClose(false);
     
     auto pRequest = pContext->make_get("https://duckduckgo.com/?q=", 
-        "libcurl-agent/1.0",
+        "libcurl-agent/1.0", 300000,
         //Headers
         {
             //"Travis-API-Version: 3",

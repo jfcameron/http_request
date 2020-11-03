@@ -33,6 +33,7 @@ namespace jfc::http
     public:
         virtual request_shared_ptr make_get(const std::string &aURL,
             const std::string &aUserAgent,
+            const size_t aTimeoutMiliseconds,
             const std::vector<std::string> &aHeaders,
             const http::request::response_handler_functor &,
             const http::request::failure_handler_functor &) override;
