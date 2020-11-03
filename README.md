@@ -2,4 +2,18 @@
 
 ## jfc-http_request
 
-oo http requests. See demo/ for usage.
+Concurrent http request library, uses libcurl for implementation.
+
+A single thread makes requests then handles their responses asynchronously. Any number of worker threads perform the requests. 
+
+### state of project
+
+currently supports GET requests
+
+### usage
+
+See demo for usage.
+
+### building
+
+see .travis.yml
