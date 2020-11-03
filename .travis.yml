@@ -44,29 +44,29 @@ matrix:
           make
           ctest --extra-verbose
 
-    - os: osx
-      name: build macos clang
-      osx_image: xcode12.2
-      compiler: clang
-#      addons:
-#        homebrew:
-#          packages:
-#            - gtk+
-      script:
-        - |
-          cd workspace
-          cmake .. -DJFC_BUILD_DOCS=OFF -DCMAKE_CXX_FLAGS="-pedantic -Weverything -Wno-c++98-compat -Wno-padded -Ofast -flto -funroll-loops -m64 -march=native -std=c++17 -stdlib=libc++"
-          make
-          ctest --extra-verbose
-
-    - os: windows
-      name: build windows msvc
-      compiler: MSVC
-      script: 
-        - |
-          cd workspace
-          cmake .. -DJFC_BUILD_DOCS=OFF #-DCMAKE_CXX_FLAGS=" /W4 /EHsc /WX /std:c++17 /permissive-"
-          cmake --build .
+#    - os: osx
+#      name: build macos clang
+#      osx_image: xcode12.2
+#      compiler: clang
+##      addons:
+##        homebrew:
+##          packages:
+##            - gtk+
+#      script:
+#        - |
+#          cd workspace
+#          cmake .. -DJFC_BUILD_DOCS=OFF -DCMAKE_CXX_FLAGS="-pedantic -Weverything -Wno-c++98-compat -Wno-padded -Ofast -flto -funroll-loops -m64 -march=native -std=c++17 -stdlib=libc++"
+#          make
+#          ctest --extra-verbose
+#
+#    - os: windows
+#      name: build windows msvc
+#      compiler: MSVC
+#      script: 
+#        - |
+#          cd workspace
+#          cmake .. -DJFC_BUILD_DOCS=OFF #-DCMAKE_CXX_FLAGS=" /W4 /EHsc /WX /std:c++17 /permissive-"
+#          cmake --build .
 
 #    - os: windows
 #      name: build windows mingw
