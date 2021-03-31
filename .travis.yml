@@ -79,28 +79,28 @@ matrix:
 #          cmake .. -G "MinGW Makefiles" -DJFC_BUILD_DOCS=OFF #-DCMAKE_CXX_FLAGS="-pedantic -Wall -Wextra -Ofast -flto -funroll-loops -m64 -march=native"
 #          cmake --build .
 
-#    # Documentation 
-#    - os: linux
-#      name: generate doxygen, upload to gh-pages
-#      if: branch = master
-#      compiler: gcc
-#      addons:
-#        apt:
-#          packages:
-#            - doxygen
-#      script:
-#        - |
-#          cd workspace;git submodule update --init --recursive
-#          cmake .. -DJFC_BUILD_DEMO=OFF -DJFC_BUILD_DOCS=ON -DJFC_BUILD_TESTS=OFF
-#          mv docs ~
-#          REMOTE_URL=$(git config --get remote.origin.url | sed -e "s/^https:\/\///")
-#          cd ~
-#          git clone --branch=gh-pages "https://${GITHUB_PUBLIC_REPO_TOKEN}@$REMOTE_URL" gh-pages
-#          cd gh-pages
-#          mv ~/docs/* .
-#          git add --all
-#          git commit -m "updating docs"
-#          git push
+    # Documentation 
+    - os: linux
+      name: generate doxygen, upload to gh-pages
+      if: branch = master
+      compiler: gcc
+      addons:
+        apt:
+          packages:
+            - doxygen
+      script:
+        - |
+          cd workspace;git submodule update --init --recursive
+          cmake .. -DJFC_BUILD_DEMO=OFF -DJFC_BUILD_DOCS=ON -DJFC_BUILD_TESTS=OFF
+          mv docs ~
+          REMOTE_URL=$(git config --get remote.origin.url | sed -e "s/^https:\/\///")
+          cd ~
+          git clone --branch=gh-pages "https://${GITHUB_PUBLIC_REPO_TOKEN}@$REMOTE_URL" gh-pages
+          cd gh-pages
+          mv ~/docs/* .
+          git add --all
+          git commit -m "updating docs"
+          git push
     
 #    # Coverage
 #    - os: linux
