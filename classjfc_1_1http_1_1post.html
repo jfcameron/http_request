@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jfc-http_request
-   &#160;<span id="projectnumber">dc06107bb58813087cd3e73e3319121ed135998b</span>
+   &#160;<span id="projectnumber">9076ae9d6b5547be4f14b4809dd1e9a998e49302</span>
    </div>
   </td>
  </tr>
@@ -71,6 +71,11 @@ $(function() {
 <div class="title">jfc::http::post Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>HTTP POST.  
+ <a href="classjfc_1_1http_1_1post.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="post_8h_source.html">post.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for jfc::http::post:</div>
 <div class="dyncontent">
@@ -83,9 +88,9 @@ Inheritance diagram for jfc::http::post:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acf9252e0aa1b05befb47ef7500a9d69e"><td class="memItemLeft" align="right" valign="top"><a id="acf9252e0aa1b05befb47ef7500a9d69e"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>update_postdata</b> (const std::string &amp;aPostData)=0</td></tr>
-<tr class="separator:acf9252e0aa1b05befb47ef7500a9d69e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afea4f8e8435b7c6027f60658f81ab59c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1post.html#afea4f8e8435b7c6027f60658f81ab59c">try_update_postdata</a> (const std::string &amp;aPostData)=0</td></tr>
+<tr class="memdesc:afea4f8e8435b7c6027f60658f81ab59c"><td class="mdescLeft">&#160;</td><td class="mdescRight">update the post data  <a href="#afea4f8e8435b7c6027f60658f81ab59c">More...</a><br /></td></tr>
+<tr class="separator:afea4f8e8435b7c6027f60658f81ab59c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classjfc_1_1http_1_1request"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classjfc_1_1http_1_1request')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classjfc_1_1http_1_1request.html">jfc::http::request</a></td></tr>
 <tr class="memitem:a7797e76f34a299cf1128003686ab9edd inherit pub_methods_classjfc_1_1http_1_1request"><td class="memItemLeft" align="right" valign="top"><a id="a7797e76f34a299cf1128003686ab9edd"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1request.html#a7797e76f34a299cf1128003686ab9edd">try_enqueue</a> ()=0</td></tr>
@@ -110,6 +115,38 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>response_handler_fun
 using&#160;</td><td class="memItemRight" valign="bottom"><b>failure_handler_functor</b> = std::function&lt; void(<a class="el" href="classjfc_1_1http_1_1request.html#a003015ec64e302ef41d3f91f99b08dd2">error</a>)&gt;</td></tr>
 <tr class="separator:a7ce2fdaa43e93fa97f3b3f005a3e9311 inherit pub_types_classjfc_1_1http_1_1request"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>HTTP POST. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="afea4f8e8435b7c6027f60658f81ab59c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afea4f8e8435b7c6027f60658f81ab59c">&#9670;&nbsp;</a></span>try_update_postdata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void jfc::http::post::try_update_postdata </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>aPostData</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>update the post data </p>
+<dl class="section note"><dt>Note</dt><dd>fails if called while the POST is enqueued </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>/home/travis/build/jfcameron/jfc-http_request/include/jfc/http/<a class="el" href="post_8h_source.html">post.h</a></li>
 </ul>
