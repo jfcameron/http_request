@@ -59,15 +59,15 @@ matrix:
           make
           ctest --extra-verbose
 
-#    - os: windows
-#      name: build windows msvc
-#      compiler: MSVC
-#      install: choco install curl
-#      script: 
-#        - |
-#          cd workspace
-#          cmake .. -DJFC_BUILD_DOCS=OFF #-DCMAKE_CXX_FLAGS=" /W4 /EHsc /WX /std:c++17 /permissive-"
-#          cmake --build .
+    - os: windows
+      name: build windows msvc
+      compiler: MSVC
+      install: choco install curl
+      script: 
+        - |
+          cd workspace
+          cmake .. -DJFC_BUILD_DOCS=OFF #-DCMAKE_CXX_FLAGS=" /W4 /EHsc /WX /std:c++17 /permissive-"
+          cmake --build .
 
 #    - os: windows
 #      name: build windows mingw
