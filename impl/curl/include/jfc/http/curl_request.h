@@ -62,6 +62,9 @@ namespace jfc::http
         http::request::failure_handler_functor m_FailureHandler;
 
     protected:
+        /// \brief lets child types test if they are currently enqueued from main thread
+        bool getIsEnqueued() const;
+
         /// \brief concrete request type specific configuration, run by worker
         virtual void on_enqueue_extra_worker_configuration(CURL *const pCURL);
 

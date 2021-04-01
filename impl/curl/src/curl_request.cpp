@@ -127,3 +127,8 @@ bool http::curl_request::main_try_run_handlers()
     return false;
 }
 
+bool http::curl_request::getIsEnqueued() const
+{
+    return m_bDoNotEnqueue;
+}
+

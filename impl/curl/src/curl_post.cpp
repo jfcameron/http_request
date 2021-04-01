@@ -26,9 +26,16 @@ void http::curl_post::on_enqueue_extra_worker_configuration(CURL *const pCURL)
     curl_easy_setopt(pCURL, CURLOPT_POSTFIELDS, m_PostData);
 }
 
-void http::curl_post::update_postdata(const std::string &aPostData)
+bool http::curl_post::try_update_postdata(const std::string &aPostData)
 {
-    m_PostData = aPostData;
+    if (!getIsEnqueued())
+    {
+        m_PostData = aPostData;
+
+        return true;
+    }
+
+    return false;
 }
 
 bool http::curl_post::try_enqueue()

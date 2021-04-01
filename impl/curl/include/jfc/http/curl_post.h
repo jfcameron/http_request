@@ -18,7 +18,7 @@ namespace jfc::http
     //
         virtual bool try_enqueue() override;
 
-        virtual void update_postdata(const std::string &aPostData) override;
+        virtual bool try_update_postdata(const std::string &aPostData) override;
     ///@}
 
         curl_post(std::weak_ptr<http::curl_context> pContext,

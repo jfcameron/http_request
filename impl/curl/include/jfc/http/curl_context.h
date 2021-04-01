@@ -45,18 +45,22 @@ namespace jfc::http
         
         virtual size_t enqueued_request_count() override;
     ///@}
-        
-        using curl_context_ptr = std::shared_ptr<http::curl_context>;
-        using worker_task_type = std::function<void()>;
-        using worker_task_queue = moodycamel::ConcurrentQueue<worker_task_type>;
-        using worker_task_queue_ptr = std::shared_ptr<worker_task_queue>;
 
+    /// \name internal interface
+    ///@{
+    //
         /// \brief enqueues a request into the proactor system
         void enqueue(std::shared_ptr<http::curl_request> aRequest);
+    ///@}
 
         curl_context();
 
         virtual ~curl_context();
+
+        using curl_context_ptr = std::shared_ptr<http::curl_context>;
+        using worker_task_type = std::function<void()>;
+        using worker_task_queue = moodycamel::ConcurrentQueue<worker_task_type>;
+        using worker_task_queue_ptr = std::shared_ptr<worker_task_queue>;
 
     private:
         /// \brief multiplexer: queue distributes fetch tasks to the workers

@@ -21,7 +21,7 @@ namespace jfc::http
             unhandled_error //!< used when no other information is available
         };
         
-        using response_data_type = std::vector<char>; //TODO: 
+        using response_data_type = std::vector<char>; //TODO: std::byte? unsure
 
         using response_handler_functor = std::function<void(response_data_type)>;
         using failure_handler_functor = std::function<void(error)>;

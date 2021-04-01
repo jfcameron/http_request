@@ -11,10 +11,13 @@
 
 namespace jfc::http
 {
+    /// \brief HTTP POST
     class post : public request
     {
     public:
-        virtual void update_postdata(const std::string &aPostData) = 0;
+        /// \brief update the post data
+        /// \note fails if called while the POST is enqueued
+        virtual bool try_update_postdata(const std::string &aPostData) = 0;
     };
 }
 
