@@ -26,7 +26,7 @@ namespace jfc::http
         using response_handler_functor = std::function<void(response_data_type)>;
         using failure_handler_functor = std::function<void(error)>;
 
-        ~request() = default;
+        virtual ~request() = default;
     };
 }
 
