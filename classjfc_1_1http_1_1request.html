@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jfc-http_request
-   &#160;<span id="projectnumber">1eebe8a500edd78fc4e1ed3fd2e4b931ee9e626a</span>
+   &#160;<span id="projectnumber">dc06107bb58813087cd3e73e3319121ed135998b</span>
    </div>
   </td>
  </tr>
@@ -72,6 +72,15 @@ $(function() {
 <div class="title">jfc::http::request Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Inheritance diagram for jfc::http::request:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classjfc_1_1http_1_1request.png" usemap="#jfc::http::request_map" alt=""/>
+  <map id="jfc::http::request_map" name="jfc::http::request_map">
+<area href="classjfc_1_1http_1_1post.html" alt="jfc::http::post" shape="rect" coords="0,56,99,80"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -92,9 +101,10 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>failure_handler_func
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a59e61d39876929c340cf4c2761900dcf"><td class="memItemLeft" align="right" valign="top"><a id="a59e61d39876929c340cf4c2761900dcf"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>fetch</b> ()=0</td></tr>
-<tr class="separator:a59e61d39876929c340cf4c2761900dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7797e76f34a299cf1128003686ab9edd"><td class="memItemLeft" align="right" valign="top"><a id="a7797e76f34a299cf1128003686ab9edd"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1request.html#a7797e76f34a299cf1128003686ab9edd">try_enqueue</a> ()=0</td></tr>
+<tr class="memdesc:a7797e76f34a299cf1128003686ab9edd"><td class="mdescLeft">&#160;</td><td class="mdescRight">enqueues the request to be performed by a worker. Fails if already enqueued <br /></td></tr>
+<tr class="separator:a7797e76f34a299cf1128003686ab9edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a003015ec64e302ef41d3f91f99b08dd2"></a>
