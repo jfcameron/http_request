@@ -23,7 +23,7 @@ http::curl_post::curl_post(std::weak_ptr<http::curl_context> pContext,
 
 void http::curl_post::on_enqueue_extra_worker_configuration(CURL *const pCURL)
 {
-    curl_easy_setopt(pCURL, CURLOPT_POSTFIELDS, m_PostData);
+    curl_easy_setopt(pCURL, CURLOPT_POSTFIELDS, m_PostData.c_str());
 }
 
 bool http::curl_post::try_update_postdata(const std::string &aPostData)
