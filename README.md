@@ -4,7 +4,7 @@
 
 Concurrent http request library, uses libcurl for implementation.
 
-A single thread makes requests then handles their responses asynchronously. Any number of worker threads perform the requests. 
+A single thread makes requests then handles their responses asynchronously. Any number of worker threads perform the requests concurrently. 
 
 ### state of project
 
