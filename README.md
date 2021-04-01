@@ -8,7 +8,7 @@ A single thread makes requests then handles their responses asynchronously. Any 
 
 ### state of project
 
-currently supports GET requests
+currently supports GET and POST requests
 
 ### usage
 
