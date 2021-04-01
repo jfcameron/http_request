@@ -12,43 +12,60 @@ using namespace jfc;
 
 int main(int count, char **args)
 {
-    auto pContext = http::context::make(http::context::implementation::curl);
+    auto pHttp = http::context::make(http::context::implementation::curl);
 
-    std::atomic<bool> bShouldClose(false);
-    
-    auto pRequest = pContext->make_get("https://duckduckgo.com/?q=", 
-        "libcurl-agent/1.0", 300000,
+    auto pPost = pHttp->make_post(
+        "http://localhost/post_endpoint",
+        "libcurl-agent/1.0", //User Agent
+        300000, //Timeout MS
         //Headers
         {
             //"Travis-API-Version: 3",
         },
-        [&](http::request::response_data_type data)
+        "good=morning",
+        [&](http::request::response_data_type data) //Response handler
         {
-            data.push_back('\0');
+            std::string s(data.begin(), data.end());
 
-            std::cout << &data[0] << "\n";
-
-            bShouldClose = true;
+            std::cout << "post succeeded: " << s << "\n";
         },
-        [&](http::request::error e)
+        [&](http::request::error e) //Fail handler
         {
-            std::cout << "an error has occured\n";
-
-            bShouldClose = false;
+            std::cout << "post failed\n";
         });
 
-    pRequest->fetch();
+    http::context::request_shared_ptr pGet = pHttp->make_get(
+        "http://localhost/post_endpoint",
+        "Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0", //User Agent
+        300000, //Timeout MS
+        //Headers
+        {
+            //"Travis-API-Version: 3",
+        },
+        [&](http::request::response_data_type data) //Response handler
+        {
+            std::string s(data.begin(), data.end());
+
+            std::cout << "get response: " << s << "\n";
+        },
+        [&](http::request::error e) //Fail handler
+        {
+            std::cout << "get failed\n";
+        });
+
+    pGet->try_enqueue();
+    pPost->try_enqueue();
 
     std::vector<std::thread> workers;
     
-    for (int i = 0; i < 4; ++i) workers.push_back(std::thread([&]()
+    for (int i(0); i < 4; ++i) workers.push_back(std::thread([&]()
     {
-        while(!bShouldClose) pContext->worker_update();
+        pHttp->worker_perform_enqueued_request_fetches();
     }));
 
-    while (!bShouldClose)
+    while (auto c = pHttp->enqueued_request_count())
     {
-        pContext->main_update();
+        pHttp->main_handle_completed_requests();
     }
 
     for (auto &worker : workers) worker.join();

@@ -20,7 +20,7 @@ endif()
 
 jfc_project(library
     NAME "jfchttp"
-    VERSION 0.0
+    VERSION 0.5
     DESCRIPTION "concurrent, object oriented http lib"
     C++_STANDARD 17
     C_STANDARD 90
@@ -38,6 +38,7 @@ jfc_project(library
         ${CMAKE_CURRENT_SOURCE_DIR}/src/context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/impl/curl/src/curl_context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/impl/curl/src/curl_get.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/impl/curl/src/curl_post.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/impl/curl/src/curl_request.cpp
 
     LIBRARIES

@@ -5,6 +5,9 @@
 
 #include <memory>
 #include <vector>
+#include <queue>
+#include <map>
+#include <list>
 
 #include <moody/concurrentqueue.h>
 
@@ -14,23 +17,13 @@ namespace jfc::http
 {
     class curl_request;
 
-    class curl_context final : public http::context
+    /// \brief follows proactor pattern
+    class curl_context final : public http::context, public std::enable_shared_from_this<curl_context>
     {
     public:
-        using curl_context_ptr = std::shared_ptr<http::curl_context>;
-        
-        using worker_task_type = std::function<void()>;
-
-        using worker_task_queue = moodycamel::ConcurrentQueue<worker_task_type>;
-
-        using worker_task_queue_ptr = std::shared_ptr<worker_task_queue>;
-
-    private:
-        std::vector<std::weak_ptr<http::curl_request>> m_requests;
-
-        worker_task_queue_ptr m_worker_task_queue = std::make_shared<worker_task_queue>(worker_task_queue());
-
-    public:
+    /// \name external interface
+    ///@{
+    //
         virtual request_shared_ptr make_get(const std::string &aURL,
             const std::string &aUserAgent,
             const size_t aTimeoutMiliseconds,
@@ -38,13 +31,39 @@ namespace jfc::http
             const http::request::response_handler_functor &,
             const http::request::failure_handler_functor &) override;
 
-        virtual void main_update() override;
+        virtual std::shared_ptr<http::post> make_post(const std::string &aURL,
+            const std::string &aUserAgent,
+            const size_t aTimeoutMiliseconds,
+            const std::vector<std::string> &aHeaders,
+            const std::string &aPostData,
+            const http::request::response_handler_functor &,
+            const http::request::failure_handler_functor &) override;
 
-        virtual void worker_update() override;
+        virtual bool main_handle_completed_requests() override;
+
+        virtual bool worker_perform_enqueued_request_fetches() override;
+        
+        virtual size_t enqueued_request_count() override;
+    ///@}
+        
+        using curl_context_ptr = std::shared_ptr<http::curl_context>;
+        using worker_task_type = std::function<void()>;
+        using worker_task_queue = moodycamel::ConcurrentQueue<worker_task_type>;
+        using worker_task_queue_ptr = std::shared_ptr<worker_task_queue>;
+
+        /// \brief enqueues a request into the proactor system
+        void enqueue(std::shared_ptr<http::curl_request> aRequest);
 
         curl_context();
 
         virtual ~curl_context();
+
+    private:
+        /// \brief multiplexer: queue distributes fetch tasks to the workers
+        worker_task_queue_ptr m_worker_task_queue = std::make_shared<worker_task_queue>(worker_task_queue());
+        
+        /// \brief demultiplexer: result of completed tasks are used by main via the completion handlers
+        std::vector<std::shared_ptr<http::curl_request>> m_unhandled_requests;
     };
 }
 

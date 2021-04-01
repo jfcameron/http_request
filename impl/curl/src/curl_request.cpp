@@ -24,14 +24,15 @@ static size_t WriteMemoryCallback(unsigned char *const contentPointer,
     return contentByteCount;
 }
 
-http::curl_request::curl_request(http::curl_context::worker_task_queue_ptr pWorkerTaskQueue,
+http::curl_request::curl_request(std::weak_ptr<http::curl_context> pContext,
     const std::string &aURL,
     const std::string &aUserAgent,
     const size_t aTimeoutMiliseconds,
     const std::vector<std::string> &aHeaders,
     const http::request::response_handler_functor &aResponseHandler,
     const http::request::failure_handler_functor &aFailureHandler)
-: m_pHandle([]()
+: m_pContext(pContext)    
+, m_pHandle([]()
     {
         auto handle = curl_easy_init();
 
@@ -43,14 +44,11 @@ http::curl_request::curl_request(http::curl_context::worker_task_queue_ptr pWork
     {
         curl_easy_cleanup(p);
     })
-, m_pWorkerTaskQueue(pWorkerTaskQueue)
 , m_ResponseHandler(aResponseHandler)
 , m_FailureHandler(aFailureHandler)
 {
     curl_easy_setopt(m_pHandle.get(), CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
-
     curl_easy_setopt(m_pHandle.get(), CURLOPT_URL, aURL.c_str());
-
     curl_easy_setopt(m_pHandle.get(), CURLOPT_USERAGENT, aUserAgent.c_str());
     
     if (!aHeaders.empty())
@@ -75,38 +73,57 @@ http::curl_request::curl_request(http::curl_context::worker_task_queue_ptr pWork
     curl_easy_setopt(m_pHandle.get(), CURLOPT_TIMEOUT_MS, aTimeoutMiliseconds);
 }
 
-void http::curl_request::fetch() 
-{
-    m_pWorkerTaskQueue->enqueue([&]()
-    {
-        m_bResponseLocked.test_and_set();
-        
-        m_ResponseBody.clear();
+void http::curl_request::on_enqueue_extra_worker_configuration(CURL *const) {}
 
-        curl_easy_setopt(m_pHandle.get(), CURLOPT_WRITEDATA, reinterpret_cast<void *>(&m_ResponseBody)); 
-        
-        if (const auto error = curl_easy_perform(m_pHandle.get()))
-        {
-            //TODO: be more precise: switch or map from curl codes to enum class values
-            m_RequestError = error::unhandled_error;
-        }
-        else m_RequestError = error::none;
-        
-        m_bResponseLocked.clear();
-    });
+void http::curl_request::worker_fetch_task()
+{
+    m_bResponseLocked.test_and_set();
+    
+    m_ResponseBody.clear();
+
+    curl_easy_setopt(m_pHandle.get(), CURLOPT_WRITEDATA, reinterpret_cast<void *>(&m_ResponseBody)); 
+
+    on_enqueue_extra_worker_configuration(m_pHandle.get());
+
+    if (const auto error = curl_easy_perform(m_pHandle.get()))
+    {
+        //TODO: be more precise: switch or map from curl codes to enum class values
+        m_RequestError = http::request::error::unhandled_error;
+    }
+    else m_RequestError = http::request::error::none;
+    
+    m_bResponseLocked.clear();
 }
 
-void http::curl_request::main_update()
+bool http::curl_request::try_enqueue() 
+{
+    if (!m_bDoNotEnqueue)
+    {
+        m_bDoNotEnqueue = true;
+
+        if (auto pContext = m_pContext.lock())
+            pContext->enqueue(shared_from_this());
+        else 
+            return false;
+
+        return true;
+    }
+
+    return false;
+}
+
+bool http::curl_request::main_try_run_handlers()
 {
     if (!m_bResponseLocked.test_and_set())
     {
-        if (m_RequestError == error::none) m_ResponseHandler(m_ResponseBody);
+        if (m_RequestError == http::request::error::none) m_ResponseHandler(m_ResponseBody);
         else m_FailureHandler(m_RequestError);
-    }
-}
 
-void http::curl_request::worker_update()
-{
-    if (curl_context::worker_task_type task; m_pWorkerTaskQueue->try_dequeue(task)) task();
+        m_bDoNotEnqueue = false;
+
+        return true;
+    }
+
+    return false;
 }
 

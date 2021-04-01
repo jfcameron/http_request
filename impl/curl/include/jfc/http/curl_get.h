@@ -3,20 +3,18 @@
 #ifndef JFC_HTTP_CURL_GET_H
 #define JFC_HTTP_CURL_GET_H
 
+#include <jfc/http/request.h>
 #include <jfc/http/curl_request.h>
-#include <jfc/http/curl_context.h>
 
 namespace jfc::http
 {
     /// \brief curl implementation of a http GET
-    class curl_get final : public curl_request
+    class curl_get final : public curl_request, public request
     {
     public:
+        virtual bool try_enqueue() override;
 
-    private:
-
-    public:
-        curl_get(http::curl_context::worker_task_queue_ptr pWorkerTaskQueue,
+        curl_get(std::weak_ptr<http::curl_context> pContext,
             const std::string &aURL, 
             const std::string &aUserAgent,
             const size_t aTimeoutMiliseconds,
