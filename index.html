@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jfc-http_request
-   &#160;<span id="projectnumber">5cdc11fc476986c54265396f20fd5b0e10f3ddd5</span>
+   &#160;<span id="projectnumber">6a6aa73572ac2fb121290fc110ccc4e6582fceac</span>
    </div>
   </td>
  </tr>
@@ -68,8 +68,11 @@ $(function() {
 <h2>jfc-http_request</h2>
 <p>Concurrent http request library, uses libcurl for implementation.</p>
 <p>A single thread makes requests then handles their responses asynchronously. Any number of worker threads perform the requests concurrently.</p>
+<p>This project does not create threads or keep a thread group itself, this is done to allow the user to decide what threading strategy makes the most sense in the dependent project.</p>
 <h3>state of project</h3>
-<p>currently supports GET and POST requests</p>
+<p>currently supports GET and POST requests.</p>
+<p>CI build scripts confirm Linux and Mac compatibility.</p>
+<p>I am currently deciding how best to pull in libCURL for Windows.. likely submodule then static linking.</p>
 <h3>usage</h3>
 <p>See demo for usage.</p>
 <h3>building</h3>
