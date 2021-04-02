@@ -10,13 +10,9 @@ option(JFC_BUILD_DEMO "Build the demo" ON)
 option(JFC_BUILD_DOCS "Build documentation" OFF)
 option(JFC_BUILD_TESTS "Build unit tests" ON)
 
-#add_subdirectory(thirdparty)
+add_subdirectory(thirdparty)
 
 FIND_PACKAGE(CURL REQUIRED)
-
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-    find_package(Threads REQUIRED)
-endif()
 
 jfc_project(library
     NAME "jfchttp"
@@ -43,7 +39,6 @@ jfc_project(library
 
     LIBRARIES
         ${CURL_LIBRARIES}
-        ${CMAKE_THREAD_LIBS_INIT}
 
 #    DEPENDENCIES
 #        "example"

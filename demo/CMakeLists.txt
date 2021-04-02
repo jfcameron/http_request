@@ -2,6 +2,10 @@
 
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+    find_package(Threads REQUIRED)
+endif()
+
 jfc_project(executable
     NAME "jfchttp-demo"
     VERSION 1.0
@@ -17,6 +21,7 @@ jfc_project(executable
 
     LIBRARIES
         "${jfchttp_LIBRARIES}"
+        ${CMAKE_THREAD_LIBS_INIT}
 
     DEPENDENCIES
         "jfchttp"
