@@ -2,7 +2,7 @@
 
 ## jfc-http_request
 
-Concurrent http request library, uses libcurl for implementation.
+Concurrent http request library, uses libcurl for implementation. Supports Linux, Mac, Windows.
 
 A single thread makes requests then handles their responses asynchronously. Any number of worker threads perform the requests concurrently. 
 
@@ -12,15 +12,11 @@ This project does not create threads or keep a thread group itself, this is done
 
 currently supports GET and POST requests.
 
-CI build scripts confirm Linux and Mac compatibility.
-
-I am currently deciding how best to pull in libCURL for Windows.. likely submodule then static linking.
-
 ### usage
 
 See demo for usage.
 
 ### building
 
-see .travis.yml
+see `.travis.yml` for platform specific instructions
 
