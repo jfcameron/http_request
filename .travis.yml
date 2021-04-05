@@ -1,4 +1,4 @@
-# © 2020 Joseph Cameron - All Rights Reserved
+# © Joseph Cameron - All Rights Reserved
 # jfc-http_request ci script
 
 dist: bionic 
@@ -59,16 +59,16 @@ matrix:
           cmake --build .
           ctest --extra-verbose
 
-#    - os: windows
-#      name: build windows msvc
-#      compiler: MSVC
-#      install: choco install curl
-#      script: 
-#        - |
-#          cd workspace
-#          cmake .. -DJFC_BUILD_DOCS=OFF -DCMAKE_CXX_FLAGS=" /std::c++17" #/W4 /EHsc /WX /std:c++17 /permissive-"
-#          Get-ChildItem -Recurse
-#          cmake --build .
+    - os: windows
+      name: build windows msvc
+      compiler: MSVC
+      install: choco install curl
+      script: 
+        - |
+          cd workspace
+          cmake .. -DJFC_BUILD_DOCS=OFF -DCMAKE_CXX_FLAGS=" /std::c++17" #/W4 /EHsc /WX /std:c++17 /permissive-"
+          Get-ChildItem -Recurse
+          cmake --build .
 
 #    - os: windows
 #      name: build windows mingw
