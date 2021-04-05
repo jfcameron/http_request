@@ -70,15 +70,16 @@ matrix:
           Get-ChildItem -Recurse
           cmake --build .
 
-#    - os: windows
-#      name: build windows mingw
-#      compiler: mingw64
-#      install: choco install mingw
-#      script: 
-#        - |
-#          cd workspace
-#          cmake .. -G "MinGW Makefiles" -DJFC_BUILD_DOCS=OFF #-DCMAKE_CXX_FLAGS="-pedantic -Wall -Wextra -Ofast -flto -funroll-loops -m64 -march=native"
-#          cmake --build .
+    - os: windows
+      name: build windows mingw
+      compiler: mingw64
+      install: choco install mingw
+      install: choco install curl
+      script: 
+        - |
+          cd workspace
+          cmake .. -G "MinGW Makefiles" -DJFC_BUILD_DOCS=OFF -DCMAKE_CXX_FLAGS=" /std::c++17" #-pedantic -Wall -Wextra -Ofast -flto -funroll-loops -m64 -march=native"
+          cmake --build .
 
     # Documentation 
     - os: linux
@@ -102,23 +103,6 @@ matrix:
           git add --all
           git commit -m "updating docs"
           git push
-    
-#    # Coverage
-#    - os: linux
-#      name: generate coverage, upload to coveralls
-#      if: branch = master
-#      compiler: gcc
-#      before_install: pip install --user cpp-coveralls
-#      script:
-#        - |
-#          cd workspace
-#          cmake .. -DJFC_BUILD_DOCS=OFF -DCMAKE_CXX_FLAGS="-g -O0 -Wall -fprofile-arcs -ftest-coverage"
-#          make
-#          make test
-#          cd ..
-#          after_success:
-#          - |
-#            coveralls --exclude test --exclude workspace/CMakeFiles --exclude cmake --exclude src --gcov-options '\-lp'
 
 before_script: 
   - |
