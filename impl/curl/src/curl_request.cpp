@@ -10,6 +10,19 @@
 
 using namespace jfc;
 
+static http::request::error curlcode_to_requesterror(const CURLcode aCurlCode)
+{
+    http::request::error return_value = http::request::error::unhandled_error;
+
+    switch (aCurlCode)
+    {
+    case(CURLE_OK): return_value = http::request::error::none; break;
+    case(CURLE_UNSUPPORTED_PROTOCOL): return_value = http::request::error::unsupported_protocol; break;
+    }
+
+    return return_value;
+}
+
 static size_t WriteMemoryCallback(unsigned char *const contentPointer, 
     const size_t contentItemSize, 
     const size_t contentItemCount, 
@@ -47,6 +60,8 @@ http::curl_request::curl_request(std::weak_ptr<http::curl_context> pContext,
 , m_ResponseHandler(aResponseHandler)
 , m_FailureHandler(aFailureHandler)
 {
+    m_bResponseLocked.test_and_set();
+
     curl_easy_setopt(m_pHandle.get(), CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
     curl_easy_setopt(m_pHandle.get(), CURLOPT_URL, aURL.c_str());
     curl_easy_setopt(m_pHandle.get(), CURLOPT_USERAGENT, aUserAgent.c_str());
@@ -85,12 +100,7 @@ void http::curl_request::worker_fetch_task()
 
     on_enqueue_extra_worker_configuration(m_pHandle.get());
 
-    if (const auto error = curl_easy_perform(m_pHandle.get()))
-    {
-        //TODO: be more precise: switch or map from curl codes to enum class values
-        m_RequestError = http::request::error::unhandled_error;
-    }
-    else m_RequestError = http::request::error::none;
+    m_RequestError = curlcode_to_requesterror(curl_easy_perform(m_pHandle.get()));
     
     m_bResponseLocked.clear();
 }

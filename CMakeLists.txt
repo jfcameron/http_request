@@ -1,4 +1,4 @@
-# © 2020 Joseph Cameron - All Rights Reserved
+# © Joseph Cameron - All Rights Reserved
 
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
@@ -11,8 +11,6 @@ option(JFC_BUILD_DOCS "Build documentation" OFF)
 option(JFC_BUILD_TESTS "Build unit tests" ON)
 
 add_subdirectory(thirdparty)
-
-FIND_PACKAGE(CURL REQUIRED)
 
 jfc_project(library
     NAME "jfchttp"
@@ -40,8 +38,8 @@ jfc_project(library
     LIBRARIES
         ${CURL_LIBRARIES}
 
-#    DEPENDENCIES
-#        "example"
+    DEPENDENCIES
+	"${CURL_LIBRARY_NAME}"
 )
 
 if (JFC_BUILD_DEMO)

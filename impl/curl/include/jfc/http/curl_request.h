@@ -11,6 +11,7 @@
 #include <jfc/http/curl_context.h>
 #include <jfc/http/request.h>
 
+#define CURL_STATICLIB
 #include <curl/curl.h>
 
 namespace jfc::http

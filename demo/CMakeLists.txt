@@ -22,6 +22,7 @@ jfc_project(executable
     LIBRARIES
         "${jfchttp_LIBRARIES}"
         ${CMAKE_THREAD_LIBS_INIT}
+		${CURL_LIBRARIES}
 
     DEPENDENCIES
         "jfchttp"

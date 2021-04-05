@@ -17,6 +17,7 @@ namespace jfc::http
         enum class error
         {
             none,
+            unsupported_protocol,
             network_error,
             unhandled_error //!< used when no other information is available
         };
