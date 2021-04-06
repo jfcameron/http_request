@@ -8,6 +8,51 @@ A single thread makes requests then handles their responses asynchronously. Any 
 
 This project does not create threads or keep a thread group itself, this is done to allow the user to decide what threading strategy makes the most sense in the dependent project.
 
+```cpp
+// Initializing the library
+auto pHttp = http::context::make(http::context::implementation::curl);
+
+// Creating a basic GET request
+http::context::request_shared_ptr pGet = pHttp->make_get(
+    "https://localhost/get_endpoint",
+    "Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0", //User Agent
+    300000, //Timeout MS
+    //Headers
+    {
+        "Connection: close",
+    },
+    [&](http::request::response_data_type data) //Response handler
+    {
+        std::string s(data.begin(), data.end());
+
+        std::cout << "get response: " << s << "\n";
+    },
+    [&](http::request::error e) //Fail handler
+    {
+        std::cout << "get failed\n";
+    });
+
+// Enqueuing the request
+pGet->try_enqueue();
+```
+```cpp
+// Setting up a worker threadgroup to do the fetch work
+std::vector<std::thread> workers;
+
+for (size_t i(0); i < 4; ++i) workers.push_back(std::thread([&]()
+{
+    if (!pHttp->worker_try_perform_enqueued_request_fetches()) 
+        std::this_thread::yield();
+}));
+
+// Handling response on the main thread
+while (auto c = pHttp->enqueued_request_count())
+{
+    if (!pHttp->main_try_handle_completed_requests())
+        std::this_thread::yield();
+}
+```
+
 ### usage
 
 See demo for usage.
