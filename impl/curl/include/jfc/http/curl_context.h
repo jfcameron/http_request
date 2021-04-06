@@ -39,9 +39,9 @@ namespace jfc::http
             const http::request::response_handler_functor &,
             const http::request::failure_handler_functor &) override;
 
-        virtual bool main_handle_completed_requests() override;
+        virtual bool main_try_handle_completed_requests() override;
 
-        virtual bool worker_perform_enqueued_request_fetches() override;
+        virtual bool worker_try_perform_enqueued_request_fetches() override;
         
         virtual size_t enqueued_request_count() override;
     ///@}

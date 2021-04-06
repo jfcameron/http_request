@@ -60,7 +60,7 @@ std::shared_ptr<http::post> http::curl_context::make_post(const std::string &aUR
     return std::static_pointer_cast<http::post>(p);
 }
 
-bool http::curl_context::main_handle_completed_requests()
+bool http::curl_context::main_try_handle_completed_requests()
 {
     for (size_t i(0); i < m_unhandled_requests.size(); ++i)
     {
@@ -75,7 +75,7 @@ bool http::curl_context::main_handle_completed_requests()
     return false;
 }
 
-bool http::curl_context::worker_perform_enqueued_request_fetches()
+bool http::curl_context::worker_try_perform_enqueued_request_fetches()
 {
     if (curl_context::worker_task_type task; m_worker_task_queue->try_dequeue(task)) 
     {

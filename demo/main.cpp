@@ -58,14 +58,16 @@ int main(int count, char **args)
 
     std::vector<std::thread> workers;
     
-    for (int i(0); i < 4; ++i) workers.push_back(std::thread([&]()
+    for (size_t i(0); i < 4; ++i) workers.push_back(std::thread([&]()
     {
-        pHttp->worker_perform_enqueued_request_fetches();
+        if (!pHttp->worker_try_perform_enqueued_request_fetches()) 
+            std::this_thread::yield();
     }));
 
     while (auto c = pHttp->enqueued_request_count())
     {
-        pHttp->main_handle_completed_requests();
+        if (!pHttp->main_try_handle_completed_requests())
+            std::this_thread::yield();
     }
 
     for (auto &worker : workers) worker.join();
