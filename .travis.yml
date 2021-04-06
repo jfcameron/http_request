@@ -70,16 +70,16 @@ matrix:
           Get-ChildItem -Recurse
           cmake --build .
 
-#    - os: windows
-#      name: build windows mingw
-#      compiler: mingw64
-#      install: choco install mingw
-#      install: choco install curl
-#      script: 
-#        - |
-#          cd workspace
-#          cmake .. -G "MinGW Makefiles" -DJFC_BUILD_DOCS=OFF -DCMAKE_CXX_FLAGS=" /std::c++17" #-pedantic -Wall -Wextra -Ofast -flto -funroll-loops -m64 -march=native"
-#          cmake --build .
+    - os: windows
+      name: build windows mingw
+      compiler: mingw64
+      install: choco install mingw
+      install: choco install curl
+      script: 
+        - |
+          cd workspace
+          cmake .. -G "MinGW Makefiles" -DJFC_BUILD_DOCS=OFF -DCMAKE_CXX_FLAGS=" /std::c++17" #-pedantic -Wall -Wextra -Ofast -flto -funroll-loops -m64 -march=native"
+          cmake --build .
 
     # Documentation 
     - os: linux
