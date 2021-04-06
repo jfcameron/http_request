@@ -9,19 +9,10 @@
 
 #include <jfc/http/request.h>
 #include <jfc/http/post.h>
+#include <jfc/http/response_handler.h>
 
 namespace jfc::http
 {
-    class reponse_handler
-    {
-    public:
-        virtual void worker_on_success(std::vector<char>) = 0;
-        virtual void main_on_success() = 0;
-        virtual void main_on_failure(const http::request::error) = 0;
-
-        virtual ~reponse_handler() = default;
-    };
-
     /// \brief library entry point.
     class context
     {

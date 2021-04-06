@@ -5,9 +5,6 @@
 
 #include <memory>
 #include <vector>
-#include <queue>
-#include <map>
-#include <list>
 
 #include <moody/concurrentqueue.h>
 
@@ -17,7 +14,7 @@ namespace jfc::http
 {
     class curl_request;
 
-    /// \brief follows proactor pattern
+    /// \brief curl implementation of the library
     class curl_context final : public http::context, public std::enable_shared_from_this<curl_context>
     {
     public:

@@ -1,7 +1,7 @@
 // © 2020 Joseph Cameron - All Rights Reserved
 
-#include <stdexcept>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 
 #include <jfc/http/curl_request.h>
@@ -32,7 +32,8 @@ static size_t WriteMemoryCallback(unsigned char *const contentPointer,
 
     auto pResponseBuffer(static_cast<http::request::response_data_type *const>(userPointer));
 
-    pResponseBuffer->insert(pResponseBuffer->end(), contentPointer, contentPointer + contentByteCount);
+    pResponseBuffer->insert(pResponseBuffer->end(), contentPointer, 
+        contentPointer + contentByteCount);
 
     return contentByteCount;
 }
@@ -86,7 +87,7 @@ http::curl_request::curl_request(std::weak_ptr<http::curl_context> pContext,
     curl_easy_setopt(m_pHandle.get(), CURLOPT_TIMEOUT_MS, aTimeoutMiliseconds);
 }
 
-void http::curl_request::on_enqueue_extra_worker_configuration(CURL *const) {}
+void http::curl_request::worker_on_enqueued_perform_extra_configuration(CURL *const) {}
 
 void http::curl_request::worker_fetch_task()
 {
@@ -94,14 +95,15 @@ void http::curl_request::worker_fetch_task()
     
     m_ResponseBody.clear();
 
-    curl_easy_setopt(m_pHandle.get(), CURLOPT_WRITEDATA, reinterpret_cast<void *>(&m_ResponseBody)); 
+    curl_easy_setopt(m_pHandle.get(), CURLOPT_WRITEDATA, 
+        reinterpret_cast<void *>(&m_ResponseBody)); 
 
-    on_enqueue_extra_worker_configuration(m_pHandle.get());
+    worker_on_enqueued_perform_extra_configuration(m_pHandle.get());
 
     const auto error = curl_easy_perform(m_pHandle.get());
 
     if (error == CURLE_OK) m_ResponseHandler->worker_on_success(m_ResponseBody);
-
+    
     m_RequestError = curlcode_to_requesterror(error);
 
     m_bResponseLocked.clear();

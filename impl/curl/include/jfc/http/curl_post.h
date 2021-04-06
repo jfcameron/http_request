@@ -4,7 +4,6 @@
 #define JFC_HTTP_CURL_POST_H
 
 #include <jfc/http/curl_request.h>
-
 #include <jfc/http/post.h>
 
 namespace jfc::http
@@ -32,7 +31,7 @@ namespace jfc::http
         ~curl_post() = default;
     
     private:
-        virtual void on_enqueue_extra_worker_configuration(CURL *const pCURL) override;
+        virtual void worker_on_enqueued_perform_extra_configuration(CURL *const pCURL) override;
 
         std::string m_PostData;
     };

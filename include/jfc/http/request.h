@@ -11,7 +11,8 @@ namespace jfc::http
     class request
     {
     public:
-        /// \brief enqueues the request to be performed by a worker. Fails if already enqueued
+        /// \brief enqueues the request to be performed by a worker. 
+        /// Fails if already enqueued
         virtual bool try_enqueue() = 0;
 
         enum class error
@@ -22,7 +23,7 @@ namespace jfc::http
             unhandled_error //!< used when no other information is available
         };
         
-        using response_data_type = std::vector<char>; //TODO: std::byte? unsure
+        using response_data_type = std::vector<char>;
 
         using response_handler_functor = std::function<void(response_data_type)>;
         using failure_handler_functor = std::function<void(error)>;

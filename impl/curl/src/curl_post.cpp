@@ -19,7 +19,7 @@ http::curl_post::curl_post(std::weak_ptr<http::curl_context> pContext,
     std::move(aHandler))
 {}
 
-void http::curl_post::on_enqueue_extra_worker_configuration(CURL *const pCURL)
+void http::curl_post::worker_on_enqueued_perform_extra_configuration(CURL *const pCURL)
 {
     curl_easy_setopt(pCURL, CURLOPT_POSTFIELDS, m_PostData.c_str());
 }

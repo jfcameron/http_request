@@ -19,7 +19,7 @@ namespace jfc::http
         /// \note fails if called while the POST is enqueued
         virtual bool try_update_postdata(const std::string &aPostData) = 0;
 
-        ~post() = default;
+        virtual ~post() = default;
     };
 }
 
