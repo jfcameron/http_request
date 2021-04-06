@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jfc-http_request
-   &#160;<span id="projectnumber">5e4c5a4adddb62ecba9472e9699677f12ba6c28d</span>
+   &#160;<span id="projectnumber">638100cf6190cfc22e84d429a4b926336f9c988d</span>
    </div>
   </td>
  </tr>
@@ -111,12 +111,12 @@ virtual std::shared_ptr&lt; <a class="el" href="classjfc_1_1http_1_1post.html">h
 std::shared_ptr&lt; <a class="el" href="classjfc_1_1http_1_1post.html">http::post</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#a66901561aec69085dd6290997f8e5c70">make_post</a> (const std::string &amp;aURL, const std::string &amp;aUserAgent, const size_t aTimeoutMiliseconds, const std::vector&lt; std::string &gt; &amp;aHeaders, const std::string &amp;aPostData, std::function&lt; void(std::vector&lt; char &gt;)&gt; aOnSuccess, std::function&lt; void(const <a class="el" href="classjfc_1_1http_1_1request.html#a003015ec64e302ef41d3f91f99b08dd2">http::request::error</a>)&gt; aOnFailure)</td></tr>
 <tr class="memdesc:a66901561aec69085dd6290997f8e5c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a POST request worker processes response before returning to main <br /></td></tr>
 <tr class="separator:a66901561aec69085dd6290997f8e5c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a103b7430ca4d448577341907ebfc8daa"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#a103b7430ca4d448577341907ebfc8daa">main_try_handle_completed_requests</a> ()=0</td></tr>
-<tr class="memdesc:a103b7430ca4d448577341907ebfc8daa"><td class="mdescLeft">&#160;</td><td class="mdescRight">call handlers for completed requests  must be called by the single "main" thread  <a href="#a103b7430ca4d448577341907ebfc8daa">More...</a><br /></td></tr>
-<tr class="separator:a103b7430ca4d448577341907ebfc8daa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae184b6b164768a16e53396a3f830719c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#ae184b6b164768a16e53396a3f830719c">worker_try_perform_enqueued_request_fetches</a> ()=0</td></tr>
-<tr class="memdesc:ae184b6b164768a16e53396a3f830719c"><td class="mdescLeft">&#160;</td><td class="mdescRight">performs enqueued fetches.  <a href="#ae184b6b164768a16e53396a3f830719c">More...</a><br /></td></tr>
-<tr class="separator:ae184b6b164768a16e53396a3f830719c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e2d4c9d6142621b981cd414c0fdb0d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#a37e2d4c9d6142621b981cd414c0fdb0d">main_try_handle_completed_request</a> ()=0</td></tr>
+<tr class="memdesc:a37e2d4c9d6142621b981cd414c0fdb0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">call handlers for completed requests  must be called by the single "main" thread  <a href="#a37e2d4c9d6142621b981cd414c0fdb0d">More...</a><br /></td></tr>
+<tr class="separator:a37e2d4c9d6142621b981cd414c0fdb0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae00a5da3ae73d74aa828c7eca446ccac"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#ae00a5da3ae73d74aa828c7eca446ccac">worker_try_perform_enqueued_request</a> ()=0</td></tr>
+<tr class="memdesc:ae00a5da3ae73d74aa828c7eca446ccac"><td class="mdescLeft">&#160;</td><td class="mdescRight">performs enqueued fetches.  <a href="#ae00a5da3ae73d74aa828c7eca446ccac">More...</a><br /></td></tr>
+<tr class="separator:ae00a5da3ae73d74aa828c7eca446ccac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9414c6ca1071d79e959c2d901c99ee6b"><td class="memItemLeft" align="right" valign="top"><a id="a9414c6ca1071d79e959c2d901c99ee6b"></a>
 virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#a9414c6ca1071d79e959c2d901c99ee6b">enqueued_request_count</a> ()=0</td></tr>
 <tr class="memdesc:a9414c6ca1071d79e959c2d901c99ee6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns the number of requests currently enqueued <br /></td></tr>
@@ -162,8 +162,8 @@ static context_shared_ptr&#160;</td><td class="memItemRight" valign="bottom"><a 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a103b7430ca4d448577341907ebfc8daa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a103b7430ca4d448577341907ebfc8daa">&#9670;&nbsp;</a></span>main_try_handle_completed_requests()</h2>
+<a id="a37e2d4c9d6142621b981cd414c0fdb0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37e2d4c9d6142621b981cd414c0fdb0d">&#9670;&nbsp;</a></span>main_try_handle_completed_request()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,7 +172,7 @@ static context_shared_ptr&#160;</td><td class="memItemRight" valign="bottom"><a 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool jfc::http::context::main_try_handle_completed_requests </td>
+          <td class="memname">virtual bool jfc::http::context::main_try_handle_completed_request </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -190,8 +190,8 @@ static context_shared_ptr&#160;</td><td class="memItemRight" valign="bottom"><a 
 
 </div>
 </div>
-<a id="ae184b6b164768a16e53396a3f830719c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae184b6b164768a16e53396a3f830719c">&#9670;&nbsp;</a></span>worker_try_perform_enqueued_request_fetches()</h2>
+<a id="ae00a5da3ae73d74aa828c7eca446ccac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae00a5da3ae73d74aa828c7eca446ccac">&#9670;&nbsp;</a></span>worker_try_perform_enqueued_request()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -200,7 +200,7 @@ static context_shared_ptr&#160;</td><td class="memItemRight" valign="bottom"><a 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool jfc::http::context::worker_try_perform_enqueued_request_fetches </td>
+          <td class="memname">virtual bool jfc::http::context::worker_try_perform_enqueued_request </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
