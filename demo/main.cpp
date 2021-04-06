@@ -43,12 +43,11 @@ int main(int count, char **args)
         std::optional<size_t> m_size;
 
     public:
-        virtual void worker_on_success(std::vector<char> aData) override
+        virtual void worker_on_success(std::vector<char> data) override
         {
-            if (aData.size()) m_size = { aData.size() };
-            else m_size = {};
+            m_size = data.size();
 
-            std::cout << "worker succeeded. Data processed\n";
+            std::cout << "worker succeeded. Data processed: " << data.size() << "\n";
         }
 
         virtual void main_on_success() override
@@ -84,21 +83,29 @@ int main(int count, char **args)
     pGet->try_enqueue();
     pPost->try_enqueue();
 
+    std::atomic<bool> bProgramShouldClose(false);
+
     std::vector<std::thread> workers;
     
     for (size_t i(0); i < 4; ++i) workers.push_back(std::thread([&]()
     {
-        if (!pHttp->worker_try_perform_enqueued_request_fetches()) 
-            std::this_thread::yield();
+        while (!bProgramShouldClose)
+        {
+            if (!pHttp->worker_try_perform_enqueued_request_fetches()) 
+                std::this_thread::yield();
+        }
     }));
 
-    while (auto c = pHttp->enqueued_request_count())
+    while (pHttp->enqueued_request_count())
     {
         if (!pHttp->main_try_handle_completed_requests())
             std::this_thread::yield();
     }
 
+    bProgramShouldClose = true;
+
     for (auto &worker : workers) worker.join();
 
     return EXIT_SUCCESS;
 }
+

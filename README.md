@@ -42,10 +42,15 @@ pGet->try_enqueue();
 // Setting up a worker threadgroup to do the fetch work
 std::vector<std::thread> workers;
 
+std::atomic<bool> bProgramShouldClose(false);
+
 for (size_t i(0); i < 4; ++i) workers.push_back(std::thread([&]()
 {
-    if (!pHttp->worker_try_perform_enqueued_request_fetches()) 
-        std::this_thread::yield();
+    while (!bProgramShouldClose)
+    {
+        if (!pHttp->worker_try_perform_enqueued_request_fetches()) 
+            std::this_thread::yield();
+    }
 }));
 
 // Handling response on the main thread
@@ -54,6 +59,8 @@ while (auto c = pHttp->enqueued_request_count())
     if (!pHttp->main_try_handle_completed_requests())
         std::this_thread::yield();
 }
+
+bProgramShouldClose = true;
 ```
 
 

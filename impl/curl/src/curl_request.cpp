@@ -100,7 +100,7 @@ void http::curl_request::worker_fetch_task()
 
     const auto error = curl_easy_perform(m_pHandle.get());
 
-    if (error == CURLE_OK) m_ResponseHandler->worker_on_success(m_ResponseBody); //new
+    if (error == CURLE_OK) m_ResponseHandler->worker_on_success(m_ResponseBody);
 
     m_RequestError = curlcode_to_requesterror(error);
 
