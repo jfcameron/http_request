@@ -23,8 +23,8 @@ namespace jfc::http
         enum class implementation
         {
             curl, /// !< use libcurl impl
-            //wasm_browser_apis /// !< use browser apis if compiled to wasm
-            //null /// !< testing, & when porting dependent code somewhere unsupported
+            null /// !< testing, & when porting dependent code somewhere unsupported
+            //TODO: wasm_browser_apis /// !< use browser apis if compiled to wasm
         };
 
         /// \brief create a context

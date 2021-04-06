@@ -14,7 +14,7 @@ add_subdirectory(thirdparty)
 
 jfc_project(library
     NAME "jfchttp"
-    VERSION 0.5
+    VERSION 0.75
     DESCRIPTION "concurrent, object oriented http lib"
     C++_STANDARD 17
     C_STANDARD 90
@@ -27,6 +27,7 @@ jfc_project(library
     PRIVATE_INCLUDE_DIRECTORIES
         ${CMAKE_CURRENT_SOURCE_DIR}/src/include
         ${CMAKE_CURRENT_SOURCE_DIR}/impl/curl/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/impl/null/include
 
     SOURCE_LIST
         ${CMAKE_CURRENT_SOURCE_DIR}/src/context.cpp
