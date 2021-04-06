@@ -2,15 +2,11 @@
 
 ## jfc-http_request
 
-Concurrent http request library, uses libcurl for implementation. Supports Linux, Mac, Windows.
+Concurrent http request library, uses libcurl for implementation. Supports Linux, Mac, Windows. currently supports GET and POST requests.
 
-A single thread makes requests then handles their responses asynchronously. Any number of worker threads perform the requests concurrently. 
+A single thread makes requests then handles their responses asynchronously. Any number of worker threads perform the requests concurrently. Additionally, the worker can optionally process the raw response (e.g: convert json text to a json data model) before handing the processed data back to main.
 
 This project does not create threads or keep a thread group itself, this is done to allow the user to decide what threading strategy makes the most sense in the dependent project.
-
-### state of project
-
-currently supports GET and POST requests.
 
 ### usage
 
