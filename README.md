@@ -54,7 +54,7 @@ for (size_t i(0); i < 4; ++i) workers.push_back(std::thread([&]()
 }));
 
 // Handling response on the main thread
-while (auto c = pHttp->enqueued_request_count())
+while (pHttp->enqueued_request_count())
 {
     if (!pHttp->main_try_handle_completed_requests())
         std::this_thread::yield();
