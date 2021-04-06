@@ -10,7 +10,9 @@ This project does not create threads or keep a thread group itself, this is done
 
 ### usage
 
-Basic example:
+See `demo/` for example programs.
+Go here for [documentation](https://jfcameron.github.io/jfc-http_request/)
+Below is a basic overview of how to use the library:
 ```cpp
 // Initializing the library
 auto pHttp = http::context::make(http::context::implementation::curl);
@@ -55,7 +57,6 @@ while (auto c = pHttp->enqueued_request_count())
 }
 ```
 
-See `demo/` for more examples.
 
 ### building
 
