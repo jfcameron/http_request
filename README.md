@@ -10,7 +10,7 @@ This project does not create threads or keep a thread group itself, this is done
 
 ### usage
 
-See `demo/` for example programs. Go here for [documentation](https://jfcameron.github.io/jfc-http_request/).
+See `demo/` for example programs. [Click here for documentation](https://jfcameron.github.io/jfc-http_request/).
 Below is a basic overview of how to use the library:
 ```cpp
 // Initializing the library
