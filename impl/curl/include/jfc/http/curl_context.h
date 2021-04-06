@@ -55,7 +55,7 @@ namespace jfc::http
 
         curl_context();
 
-        virtual ~curl_context();
+        ~curl_context();
 
         using curl_context_ptr = std::shared_ptr<http::curl_context>;
         using worker_task_type = std::function<void()>;
