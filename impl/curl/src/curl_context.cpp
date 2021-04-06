@@ -36,11 +36,10 @@ http::context::request_shared_ptr http::curl_context::make_get(const std::string
     const std::string &aUserAgent,
     const size_t aTimeoutMiliseconds,
     const std::vector<std::string> &aHeaders,
-    const http::request::response_handler_functor &aResponseHandler,
-    const http::request::failure_handler_functor &aFailureHandler)
+    std::unique_ptr<http::reponse_handler> && aHandler)
 {
     std::shared_ptr<http::curl_get> p(new jfc::http::curl_get(weak_from_this(), 
-        aURL, aUserAgent, aTimeoutMiliseconds, aHeaders, aResponseHandler, aFailureHandler));
+        aURL, aUserAgent, aTimeoutMiliseconds, aHeaders, std::move(aHandler)));
 
     return std::static_pointer_cast<jfc::http::context::request_shared_ptr::element_type>(p);
 }
@@ -50,12 +49,10 @@ std::shared_ptr<http::post> http::curl_context::make_post(const std::string &aUR
     const size_t aTimeoutMiliseconds,
     const std::vector<std::string> &aHeaders,
     const std::string &aPostData,
-    const http::request::response_handler_functor &aResponseHandler,
-    const http::request::failure_handler_functor &aFailureHandler)
+    std::unique_ptr<http::reponse_handler> && aHandler)
 {
     std::shared_ptr<http::curl_post> p(new jfc::http::curl_post(weak_from_this(),
-        aURL, aUserAgent, aTimeoutMiliseconds, aHeaders, aPostData, aResponseHandler, 
-        aFailureHandler));
+        aURL, aUserAgent, aTimeoutMiliseconds, aHeaders, aPostData, std::move(aHandler)));
 
     return std::static_pointer_cast<http::post>(p);
 }

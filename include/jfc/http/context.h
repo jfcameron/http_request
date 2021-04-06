@@ -12,6 +12,16 @@
 
 namespace jfc::http
 {
+    class reponse_handler
+    {
+    public:
+        virtual void worker_on_success(std::vector<char>) = 0;
+        virtual void main_on_success() = 0;
+        virtual void main_on_failure(const http::request::error) = 0;
+
+        virtual ~reponse_handler() = default;
+    };
+
     /// \brief library entry point.
     class context
     {
@@ -31,21 +41,40 @@ namespace jfc::http
         static context_shared_ptr make(const implementation &);
         
         /// \brief create a GET request
+        /// worker processes response before returning to main
         virtual request_shared_ptr make_get(const std::string &aURL,
             const std::string &aUserAgent,
             const size_t aTimeoutMiliseconds,
             const std::vector<std::string> &aHeaders,
-            const http::request::response_handler_functor &,
-            const http::request::failure_handler_functor &) = 0;
+            std::unique_ptr<http::reponse_handler> &&) = 0;
+
+        /// \brief create a GET request
+        /// worker returns the raw response directly to main
+        request_shared_ptr make_get(const std::string& aURL,
+            const std::string& aUserAgent,
+            const size_t aTimeoutMiliseconds,
+            const std::vector<std::string>& aHeaders,
+            std::function<void(std::vector<char>)> aOnSuccess,
+            std::function<void(const http::request::error)> aOnFailure);
         
         /// \brief create a POST request
+        /// worker processes response before returning to main
         virtual std::shared_ptr<http::post> make_post(const std::string &aURL,
             const std::string &aUserAgent,
             const size_t aTimeoutMiliseconds,
             const std::vector<std::string> &aHeaders,
             const std::string &aPostData,
-            const http::request::response_handler_functor &,
-            const http::request::failure_handler_functor &) = 0;
+            std::unique_ptr<http::reponse_handler> &&) = 0;
+
+        /// \brief create a POST request
+        /// worker processes response before returning to main
+        std::shared_ptr<http::post> make_post(const std::string& aURL,
+            const std::string& aUserAgent,
+            const size_t aTimeoutMiliseconds,
+            const std::vector<std::string>& aHeaders,
+            const std::string& aPostData,
+            std::function<void(std::vector<char>)> aOnSuccess,
+            std::function<void(const http::request::error)> aOnFailure);
         
         /// \brief call handlers for completed requests 
         /// \warn must be called by the single "main" thread

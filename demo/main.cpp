@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include <optional>
 
 #include <jfc/http/context.h>
 
@@ -13,34 +14,16 @@ using namespace jfc;
 int main(int count, char **args)
 {
     auto pHttp = http::context::make(http::context::implementation::curl);
-
-    auto pPost = pHttp->make_post(
-        "http://localhost/post_endpoint",
-        "libcurl-agent/1.0", //User Agent
-        300000, //Timeout MS
-        //Headers
-        {
-            //"Travis-API-Version: 3",
-        },
-        "good=morning",
-        [&](http::request::response_data_type data) //Response handler
-        {
-            std::string s(data.begin(), data.end());
-
-            std::cout << "post succeeded: " << s << "\n";
-        },
-        [&](http::request::error e) //Fail handler
-        {
-            std::cout << "post failed\n";
-        });
-
+    
+    // Simple interface example:
+    // pro: less verbose, con: main must process the server's response
     http::context::request_shared_ptr pGet = pHttp->make_get(
-        "http://localhost/get_endpoint",
+        "https://localhost/get_endpoint",
         "Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0", //User Agent
         300000, //Timeout MS
         //Headers
         {
-            //"Travis-API-Version: 3",
+            "Connection: close",
         },
         [&](http::request::response_data_type data) //Response handler
         {
@@ -52,6 +35,51 @@ int main(int count, char **args)
         {
             std::cout << "get failed\n";
         });
+
+    // Custom handler interface:
+    // pro: worker can process server's response, con: more lines of code
+    class json_handler : public http::reponse_handler
+    {
+        std::optional<size_t> m_size;
+
+    public:
+        virtual void worker_on_success(std::vector<char> aData) override
+        {
+            if (aData.size()) m_size = { aData.size() };
+            else m_size = {};
+
+            std::cout << "worker succeeded. Data processed\n";
+        }
+
+        virtual void main_on_success() override
+        {
+            std::cout << "main succeeded, value is: " <<
+                (m_size.has_value()
+                    ? std::to_string(*m_size)
+                    : std::string("the server's response could not be processed!"));
+        }
+
+        virtual void main_on_failure(const http::request::error e) override
+        {
+            std::cout << "main failed\n";
+        }
+
+        json_handler() = default;
+    };
+
+    auto pPost = pHttp->make_post(
+        "https://localhost/post_endpoint",
+        "libcurl-agent/1.0", //User Agent
+        300000, //Timeout MS
+        //Headers
+        {
+            "Travis-API-Version: 3",
+        },
+        "good=morning",
+        std::make_unique<json_handler>());
+
+
+    /// === DEMO PROGRAM ===
 
     pGet->try_enqueue();
     pPost->try_enqueue();
@@ -74,4 +102,3 @@ int main(int count, char **args)
 
     return EXIT_SUCCESS;
 }
-

@@ -42,8 +42,7 @@ http::curl_request::curl_request(std::weak_ptr<http::curl_context> pContext,
     const std::string &aUserAgent,
     const size_t aTimeoutMiliseconds,
     const std::vector<std::string> &aHeaders,
-    const http::request::response_handler_functor &aResponseHandler,
-    const http::request::failure_handler_functor &aFailureHandler)
+    std::unique_ptr<http::reponse_handler>&& aHandler)
 : m_pContext(pContext)    
 , m_pHandle([]()
     {
@@ -57,8 +56,7 @@ http::curl_request::curl_request(std::weak_ptr<http::curl_context> pContext,
     {
         curl_easy_cleanup(p);
     })
-, m_ResponseHandler(aResponseHandler)
-, m_FailureHandler(aFailureHandler)
+, m_ResponseHandler(std::move(aHandler))
 {
     m_bResponseLocked.test_and_set();
 
@@ -100,8 +98,12 @@ void http::curl_request::worker_fetch_task()
 
     on_enqueue_extra_worker_configuration(m_pHandle.get());
 
-    m_RequestError = curlcode_to_requesterror(curl_easy_perform(m_pHandle.get()));
-    
+    const auto error = curl_easy_perform(m_pHandle.get());
+
+    if (error == CURLE_OK) m_ResponseHandler->worker_on_success(m_ResponseBody); //new
+
+    m_RequestError = curlcode_to_requesterror(error);
+
     m_bResponseLocked.clear();
 }
 
@@ -126,8 +128,10 @@ bool http::curl_request::main_try_run_handlers()
 {
     if (!m_bResponseLocked.test_and_set())
     {
-        if (m_RequestError == http::request::error::none) m_ResponseHandler(m_ResponseBody);
-        else m_FailureHandler(m_RequestError);
+        if (m_RequestError == http::request::error::none) 
+            m_ResponseHandler->main_on_success();
+        else 
+            m_ResponseHandler->main_on_failure(m_RequestError);
 
         m_bDoNotEnqueue = false;
 

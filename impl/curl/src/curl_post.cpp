@@ -10,15 +10,13 @@ http::curl_post::curl_post(std::weak_ptr<http::curl_context> pContext,
     const size_t aTimeoutMiliseconds,
     const std::vector<std::string> &aHeaders,
     const std::string &aPostData,
-    const http::request::response_handler_functor &aResponseHandler,
-    const http::request::failure_handler_functor &aFailureHandler)
+    std::unique_ptr<http::reponse_handler> && aHandler)
 : http::curl_request::curl_request(pContext, 
     aURL, 
     aUserAgent, 
     aTimeoutMiliseconds,
-    aHeaders, 
-    aResponseHandler, 
-    aFailureHandler)
+    aHeaders,
+    std::move(aHandler))
 {}
 
 void http::curl_post::on_enqueue_extra_worker_configuration(CURL *const pCURL)

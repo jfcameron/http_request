@@ -27,8 +27,7 @@ namespace jfc::http
             const size_t aTimeoutMiliseconds,
             const std::vector<std::string> &aHeaders,
             const std::string &aPostData,
-            const http::request::response_handler_functor &aResponseHandler,
-            const http::request::failure_handler_functor &);
+            std::unique_ptr<http::reponse_handler> && aHandler);
 
         ~curl_post() = default;
     

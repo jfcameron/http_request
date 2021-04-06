@@ -28,16 +28,14 @@ namespace jfc::http
             const std::string &aUserAgent,
             const size_t aTimeoutMiliseconds,
             const std::vector<std::string> &aHeaders,
-            const http::request::response_handler_functor &,
-            const http::request::failure_handler_functor &) override;
+            std::unique_ptr<http::reponse_handler> &&) override;
 
         virtual std::shared_ptr<http::post> make_post(const std::string &aURL,
             const std::string &aUserAgent,
             const size_t aTimeoutMiliseconds,
             const std::vector<std::string> &aHeaders,
             const std::string &aPostData,
-            const http::request::response_handler_functor &,
-            const http::request::failure_handler_functor &) override;
+            std::unique_ptr<http::reponse_handler> &&) override;
 
         virtual bool main_try_handle_completed_requests() override;
 

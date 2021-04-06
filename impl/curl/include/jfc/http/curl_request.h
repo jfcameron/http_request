@@ -56,11 +56,8 @@ namespace jfc::http
         /// \brief shared error state of the last request
         http::request::error m_RequestError = http::request::error::none;
 
-        /// \brief user provided functor, called if request is successful
-        http::request::response_handler_functor m_ResponseHandler;
-        
-        /// \brief user provided functor, called if request fails
-        http::request::failure_handler_functor m_FailureHandler;
+        /// \brief TODO: use this
+        std::unique_ptr<http::reponse_handler> m_ResponseHandler; //NEWNEW
 
     protected:
         /// \brief lets child types test if they are currently enqueued from main thread
@@ -71,13 +68,11 @@ namespace jfc::http
 
         /// \brief ctor, inits all common request work
         curl_request(std::weak_ptr<http::curl_context> pContext,
-            const std::string &aURL, 
-            const std::string &aUserAgent,
+            const std::string& aURL,
+            const std::string& aUserAgent,
             const size_t aTimeoutMiliseconds,
-            const std::vector<std::string> &aHeaders,
-            const http::request::response_handler_functor &aResponseHandler,
-            const http::request::failure_handler_functor &);
-
+            const std::vector<std::string>& aHeaders,
+            std::unique_ptr<http::reponse_handler>&& aHandler);
     public:
         virtual ~curl_request() = default;
     };

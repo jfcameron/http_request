@@ -38,8 +38,7 @@ namespace jfc::http
             const std::string &aUserAgent,
             const size_t aTimeoutMiliseconds,
             const std::vector<std::string> &aHeaders,
-            const http::request::response_handler_functor &,
-            const http::request::failure_handler_functor &) override
+            std::unique_ptr<http::reponse_handler> &&) override
         {
             return request_shared_ptr(new null_get());
         }
@@ -49,8 +48,7 @@ namespace jfc::http
             const size_t aTimeoutMiliseconds,
             const std::vector<std::string> &aHeaders,
             const std::string &aPostData,
-            const http::request::response_handler_functor &,
-            const http::request::failure_handler_functor &) override
+            std::unique_ptr<http::reponse_handler> &&) override
         {
             return std::shared_ptr<http::post>(new null_post());
         }
