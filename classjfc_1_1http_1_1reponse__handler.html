@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>jfc-http_request: Class Members</title>
+<title>jfc-http_request: jfc::http::reponse_handler Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -44,7 +44,6 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -59,38 +58,34 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>jfc</b></li><li class="navelem"><b>http</b></li><li class="navelem"><a class="el" href="classjfc_1_1http_1_1reponse__handler.html">reponse_handler</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classjfc_1_1http_1_1reponse__handler-members.html">List of all members</a>  </div>
+  <div class="headertitle">
+<div class="title">jfc::http::reponse_handler Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+</div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div><ul>
-<li>enqueued_request_count()
-: <a class="el" href="classjfc_1_1http_1_1context.html#a9414c6ca1071d79e959c2d901c99ee6b">jfc::http::context</a>
-</li>
-<li>error
-: <a class="el" href="classjfc_1_1http_1_1request.html#a003015ec64e302ef41d3f91f99b08dd2">jfc::http::request</a>
-</li>
-<li>implementation
-: <a class="el" href="classjfc_1_1http_1_1context.html#a58bc587c9bb8340997bdb072da565260">jfc::http::context</a>
-</li>
-<li>main_try_handle_completed_requests()
-: <a class="el" href="classjfc_1_1http_1_1context.html#a103b7430ca4d448577341907ebfc8daa">jfc::http::context</a>
-</li>
-<li>make()
-: <a class="el" href="classjfc_1_1http_1_1context.html#a464cc30cbc724e800651de704f4a3c7f">jfc::http::context</a>
-</li>
-<li>make_get()
-: <a class="el" href="classjfc_1_1http_1_1context.html#abeeea1d03180efd0b9603ba10d0ae2b7">jfc::http::context</a>
-</li>
-<li>make_post()
-: <a class="el" href="classjfc_1_1http_1_1context.html#a66901561aec69085dd6290997f8e5c70">jfc::http::context</a>
-</li>
-<li>try_enqueue()
-: <a class="el" href="classjfc_1_1http_1_1request.html#a7797e76f34a299cf1128003686ab9edd">jfc::http::request</a>
-</li>
-<li>try_update_postdata()
-: <a class="el" href="classjfc_1_1http_1_1post.html#a7911ecb6ee7b5e307505da3f9b9ea9d0">jfc::http::post</a>
-</li>
-<li>worker_try_perform_enqueued_request_fetches()
-: <a class="el" href="classjfc_1_1http_1_1context.html#ae184b6b164768a16e53396a3f830719c">jfc::http::context</a>
-</li>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a54eaad1df7647d574d305a5d2718a7ef"><td class="memItemLeft" align="right" valign="top"><a id="a54eaad1df7647d574d305a5d2718a7ef"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>worker_on_success</b> (std::vector&lt; char &gt;)=0</td></tr>
+<tr class="separator:a54eaad1df7647d574d305a5d2718a7ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d5d220b51885c05dc03a5af1d1db70b"><td class="memItemLeft" align="right" valign="top"><a id="a2d5d220b51885c05dc03a5af1d1db70b"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>main_on_success</b> ()=0</td></tr>
+<tr class="separator:a2d5d220b51885c05dc03a5af1d1db70b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b5f15b3c42d2c179f167a33a58bea82"><td class="memItemLeft" align="right" valign="top"><a id="a1b5f15b3c42d2c179f167a33a58bea82"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>main_on_failure</b> (const <a class="el" href="classjfc_1_1http_1_1request.html#a003015ec64e302ef41d3f91f99b08dd2">http::request::error</a>)=0</td></tr>
+<tr class="separator:a1b5f15b3c42d2c179f167a33a58bea82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>/home/travis/build/jfcameron/jfc-http_request/include/jfc/http/<a class="el" href="context_8h_source.html">context.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

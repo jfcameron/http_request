@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jfc-http_request
-   &#160;<span id="projectnumber">71f778635d0af66d52b3238f6d643694de51cb97</span>
+   &#160;<span id="projectnumber">1791d2e7d073c9bde6850e8635be478cb803289d</span>
    </div>
   </td>
  </tr>
@@ -95,14 +95,22 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>request_shared_ptr</
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac82e5f741b18540afebf4a8d70fd09b2"><td class="memItemLeft" align="right" valign="top"><a id="ac82e5f741b18540afebf4a8d70fd09b2"></a>
-virtual request_shared_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#ac82e5f741b18540afebf4a8d70fd09b2">make_get</a> (const std::string &amp;aURL, const std::string &amp;aUserAgent, const size_t aTimeoutMiliseconds, const std::vector&lt; std::string &gt; &amp;aHeaders, const http::request::response_handler_functor &amp;, const http::request::failure_handler_functor &amp;)=0</td></tr>
-<tr class="memdesc:ac82e5f741b18540afebf4a8d70fd09b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a GET request <br /></td></tr>
-<tr class="separator:ac82e5f741b18540afebf4a8d70fd09b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc7a06a1e9903963256b748842062125"><td class="memItemLeft" align="right" valign="top"><a id="acc7a06a1e9903963256b748842062125"></a>
-virtual std::shared_ptr&lt; <a class="el" href="classjfc_1_1http_1_1post.html">http::post</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#acc7a06a1e9903963256b748842062125">make_post</a> (const std::string &amp;aURL, const std::string &amp;aUserAgent, const size_t aTimeoutMiliseconds, const std::vector&lt; std::string &gt; &amp;aHeaders, const std::string &amp;aPostData, const http::request::response_handler_functor &amp;, const http::request::failure_handler_functor &amp;)=0</td></tr>
-<tr class="memdesc:acc7a06a1e9903963256b748842062125"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a POST request <br /></td></tr>
-<tr class="separator:acc7a06a1e9903963256b748842062125"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60e7f73e24feccca9caadbcda8361fbb"><td class="memItemLeft" align="right" valign="top"><a id="a60e7f73e24feccca9caadbcda8361fbb"></a>
+virtual request_shared_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#a60e7f73e24feccca9caadbcda8361fbb">make_get</a> (const std::string &amp;aURL, const std::string &amp;aUserAgent, const size_t aTimeoutMiliseconds, const std::vector&lt; std::string &gt; &amp;aHeaders, std::unique_ptr&lt; <a class="el" href="classjfc_1_1http_1_1reponse__handler.html">http::reponse_handler</a> &gt; &amp;&amp;)=0</td></tr>
+<tr class="memdesc:a60e7f73e24feccca9caadbcda8361fbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a GET request worker processes response before returning to main <br /></td></tr>
+<tr class="separator:a60e7f73e24feccca9caadbcda8361fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeeea1d03180efd0b9603ba10d0ae2b7"><td class="memItemLeft" align="right" valign="top"><a id="abeeea1d03180efd0b9603ba10d0ae2b7"></a>
+request_shared_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#abeeea1d03180efd0b9603ba10d0ae2b7">make_get</a> (const std::string &amp;aURL, const std::string &amp;aUserAgent, const size_t aTimeoutMiliseconds, const std::vector&lt; std::string &gt; &amp;aHeaders, std::function&lt; void(std::vector&lt; char &gt;)&gt; aOnSuccess, std::function&lt; void(const <a class="el" href="classjfc_1_1http_1_1request.html#a003015ec64e302ef41d3f91f99b08dd2">http::request::error</a>)&gt; aOnFailure)</td></tr>
+<tr class="memdesc:abeeea1d03180efd0b9603ba10d0ae2b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a GET request worker returns the raw response directly to main <br /></td></tr>
+<tr class="separator:abeeea1d03180efd0b9603ba10d0ae2b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeeab89e56e9c96e3f71863718371d7c9"><td class="memItemLeft" align="right" valign="top"><a id="aeeab89e56e9c96e3f71863718371d7c9"></a>
+virtual std::shared_ptr&lt; <a class="el" href="classjfc_1_1http_1_1post.html">http::post</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#aeeab89e56e9c96e3f71863718371d7c9">make_post</a> (const std::string &amp;aURL, const std::string &amp;aUserAgent, const size_t aTimeoutMiliseconds, const std::vector&lt; std::string &gt; &amp;aHeaders, const std::string &amp;aPostData, std::unique_ptr&lt; <a class="el" href="classjfc_1_1http_1_1reponse__handler.html">http::reponse_handler</a> &gt; &amp;&amp;)=0</td></tr>
+<tr class="memdesc:aeeab89e56e9c96e3f71863718371d7c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a POST request worker processes response before returning to main <br /></td></tr>
+<tr class="separator:aeeab89e56e9c96e3f71863718371d7c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66901561aec69085dd6290997f8e5c70"><td class="memItemLeft" align="right" valign="top"><a id="a66901561aec69085dd6290997f8e5c70"></a>
+std::shared_ptr&lt; <a class="el" href="classjfc_1_1http_1_1post.html">http::post</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#a66901561aec69085dd6290997f8e5c70">make_post</a> (const std::string &amp;aURL, const std::string &amp;aUserAgent, const size_t aTimeoutMiliseconds, const std::vector&lt; std::string &gt; &amp;aHeaders, const std::string &amp;aPostData, std::function&lt; void(std::vector&lt; char &gt;)&gt; aOnSuccess, std::function&lt; void(const <a class="el" href="classjfc_1_1http_1_1request.html#a003015ec64e302ef41d3f91f99b08dd2">http::request::error</a>)&gt; aOnFailure)</td></tr>
+<tr class="memdesc:a66901561aec69085dd6290997f8e5c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a POST request worker processes response before returning to main <br /></td></tr>
+<tr class="separator:a66901561aec69085dd6290997f8e5c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a103b7430ca4d448577341907ebfc8daa"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1context.html#a103b7430ca4d448577341907ebfc8daa">main_try_handle_completed_requests</a> ()=0</td></tr>
 <tr class="memdesc:a103b7430ca4d448577341907ebfc8daa"><td class="mdescLeft">&#160;</td><td class="mdescRight">call handlers for completed requests  must be called by the single "main" thread  <a href="#a103b7430ca4d448577341907ebfc8daa">More...</a><br /></td></tr>
 <tr class="separator:a103b7430ca4d448577341907ebfc8daa"><td class="memSeparator" colspan="2">&#160;</td></tr>
