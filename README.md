@@ -48,7 +48,7 @@ for (size_t i(0); i < 4; ++i) workers.push_back(std::thread([&]()
 {
     while (!bProgramShouldClose)
     {
-        if (!pHttp->worker_try_perform_enqueued_request_fetches()) 
+        if (!pHttp->worker_try_perform_enqueued_request()) 
             std::this_thread::yield();
     }
 }));
@@ -56,7 +56,7 @@ for (size_t i(0); i < 4; ++i) workers.push_back(std::thread([&]()
 // Handling response on the main thread
 while (pHttp->enqueued_request_count())
 {
-    if (!pHttp->main_try_handle_completed_requests())
+    if (!pHttp->main_try_handle_completed_request())
         std::this_thread::yield();
 }
 

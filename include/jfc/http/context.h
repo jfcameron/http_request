@@ -79,14 +79,14 @@ namespace jfc::http
         /// \brief call handlers for completed requests 
         /// \warn must be called by the single "main" thread
         /// \note returns true if a request was handled
-        virtual bool main_try_handle_completed_requests() = 0;
+        virtual bool main_try_handle_completed_request() = 0;
 
         /// \brief performs enqueued fetches.
         /// \note threadsafe.
         /// \warn must be called by at least one thread.
         /// \warn "main" can participate but this will cause blocking on main
         /// \note returns true if a fetch was performed
-        virtual bool worker_try_perform_enqueued_request_fetches() = 0;
+        virtual bool worker_try_perform_enqueued_request() = 0;
         
         /// \brief returns the number of requests currently enqueued
         virtual size_t enqueued_request_count() = 0;

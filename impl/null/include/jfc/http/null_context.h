@@ -53,9 +53,9 @@ namespace jfc::http
             return std::shared_ptr<http::post>(new null_post());
         }
 
-        virtual bool main_try_handle_completed_requests() override { return false; }
+        virtual bool main_try_handle_completed_request() override { return false; }
 
-        virtual bool worker_try_perform_enqueued_request_fetches() override { return false; }
+        virtual bool worker_try_perform_enqueued_request() override { return false; }
         
         virtual size_t enqueued_request_count() override { return 0; }
     ///@}

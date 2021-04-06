@@ -91,14 +91,14 @@ int main(int count, char **args)
     {
         while (!bProgramShouldClose)
         {
-            if (!pHttp->worker_try_perform_enqueued_request_fetches()) 
+            if (!pHttp->worker_try_perform_enqueued_request()) 
                 std::this_thread::yield();
         }
     }));
 
     while (pHttp->enqueued_request_count())
     {
-        if (!pHttp->main_try_handle_completed_requests())
+        if (!pHttp->main_try_handle_completed_request())
             std::this_thread::yield();
     }
 

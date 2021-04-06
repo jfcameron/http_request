@@ -37,9 +37,9 @@ namespace jfc::http
             const std::string &aPostData,
             std::unique_ptr<http::reponse_handler> &&) override;
 
-        virtual bool main_try_handle_completed_requests() override;
+        virtual bool main_try_handle_completed_request() override;
 
-        virtual bool worker_try_perform_enqueued_request_fetches() override;
+        virtual bool worker_try_perform_enqueued_request() override;
         
         virtual size_t enqueued_request_count() override;
     ///@}
