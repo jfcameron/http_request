@@ -16,7 +16,7 @@ Below is a basic overview of how to use the library:
 // Initializing the library
 auto pHttp = http::context::make(http::context::implementation::curl);
 
-// Creating a basic GET request
+// Creating a basic GET request (a worker performs the fetch but response processing is done entirely by main)
 auto pGet = pHttp->make_get(
     "https://localhost/get_endpoint",
     "Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0", //User Agent
