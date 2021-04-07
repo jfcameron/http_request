@@ -40,7 +40,7 @@ jfc_project(library
         ${CURL_LIBRARIES}
 
     DEPENDENCIES
-	"${CURL_LIBRARY_NAME}"
+	${CURL_LIBRARY_NAME}
 )
 
 if (JFC_BUILD_DEMO)
