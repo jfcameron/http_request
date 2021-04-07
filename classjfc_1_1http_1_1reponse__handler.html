@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jfc-http_request
-   &#160;<span id="projectnumber">f271b2d704849f2728b32cba9b90c372f46c9b63</span>
+   &#160;<span id="projectnumber">277cc6d1e5fae38f5480abc450c4b195ef06d15c</span>
    </div>
   </td>
  </tr>
@@ -71,21 +71,32 @@ $(function() {
 <div class="title">jfc::http::reponse_handler Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>interface for user-defined request handler types  
+ <a href="classjfc_1_1http_1_1reponse__handler.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="response__handler_8h_source.html">response_handler.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a54eaad1df7647d574d305a5d2718a7ef"><td class="memItemLeft" align="right" valign="top"><a id="a54eaad1df7647d574d305a5d2718a7ef"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>worker_on_success</b> (std::vector&lt; char &gt;)=0</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1reponse__handler.html#a54eaad1df7647d574d305a5d2718a7ef">worker_on_success</a> (std::vector&lt; char &gt;)=0</td></tr>
+<tr class="memdesc:a54eaad1df7647d574d305a5d2718a7ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">called on the worker thread if the request was successful. Provides an opportunity for user-defined processing to be done on the worker thread that performed the fetch <br /></td></tr>
 <tr class="separator:a54eaad1df7647d574d305a5d2718a7ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d5d220b51885c05dc03a5af1d1db70b"><td class="memItemLeft" align="right" valign="top"><a id="a2d5d220b51885c05dc03a5af1d1db70b"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>main_on_success</b> ()=0</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1reponse__handler.html#a2d5d220b51885c05dc03a5af1d1db70b">main_on_success</a> ()=0</td></tr>
+<tr class="memdesc:a2d5d220b51885c05dc03a5af1d1db70b"><td class="mdescLeft">&#160;</td><td class="mdescRight">called by the main thread if the request was successful. guaranteed to be called after worker_on_success has completed <br /></td></tr>
 <tr class="separator:a2d5d220b51885c05dc03a5af1d1db70b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b5f15b3c42d2c179f167a33a58bea82"><td class="memItemLeft" align="right" valign="top"><a id="a1b5f15b3c42d2c179f167a33a58bea82"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>main_on_failure</b> (const <a class="el" href="classjfc_1_1http_1_1request.html#a003015ec64e302ef41d3f91f99b08dd2">http::request::error</a>)=0</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classjfc_1_1http_1_1reponse__handler.html#a1b5f15b3c42d2c179f167a33a58bea82">main_on_failure</a> (const <a class="el" href="classjfc_1_1http_1_1request.html#a003015ec64e302ef41d3f91f99b08dd2">http::request::error</a>)=0</td></tr>
+<tr class="memdesc:a1b5f15b3c42d2c179f167a33a58bea82"><td class="mdescLeft">&#160;</td><td class="mdescRight">called by main thread if the request was unsuccessful. this occurs if for example the fetch timed out or if the server returned an error code <br /></td></tr>
 <tr class="separator:a1b5f15b3c42d2c179f167a33a58bea82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/travis/build/jfcameron/jfc-http_request/include/jfc/http/<a class="el" href="context_8h_source.html">context.h</a></li>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>interface for user-defined request handler types </p>
+<p>when an enqueued request has been performed, these methods are called to allow the user to specify how to process the server's response. </p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
+<li>/home/travis/build/jfcameron/jfc-http_request/include/jfc/http/<a class="el" href="response__handler_8h_source.html">response_handler.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
