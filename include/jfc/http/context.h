@@ -29,11 +29,11 @@ namespace jfc::http
         };
 
         /// \brief create a context
-        static context_shared_ptr make(const implementation &);
+        [[nodiscard]] static context_shared_ptr make(const implementation &);
         
         /// \brief create a GET request
         /// worker processes response before returning to main
-        virtual request_shared_ptr make_get(const std::string &aURL,
+        [[nodiscard]] virtual request_shared_ptr make_get(const std::string &aURL,
             const std::string &aUserAgent,
             const size_t aTimeoutMiliseconds,
             const std::vector<std::string> &aHeaders,
@@ -41,7 +41,7 @@ namespace jfc::http
 
         /// \brief create a GET request
         /// worker returns the raw response directly to main
-        request_shared_ptr make_get(const std::string& aURL,
+        [[nodiscard]] request_shared_ptr make_get(const std::string& aURL,
             const std::string& aUserAgent,
             const size_t aTimeoutMiliseconds,
             const std::vector<std::string>& aHeaders,
@@ -50,7 +50,7 @@ namespace jfc::http
         
         /// \brief create a POST request
         /// worker processes response before returning to main
-        virtual std::shared_ptr<http::post> make_post(const std::string &aURL,
+        [[nodiscard]] virtual std::shared_ptr<http::post> make_post(const std::string &aURL,
             const std::string &aUserAgent,
             const size_t aTimeoutMiliseconds,
             const std::vector<std::string> &aHeaders,
@@ -59,7 +59,7 @@ namespace jfc::http
 
         /// \brief create a POST request
         /// worker processes response before returning to main
-        std::shared_ptr<http::post> make_post(const std::string& aURL,
+        [[nodiscard]] std::shared_ptr<http::post> make_post(const std::string& aURL,
             const std::string& aUserAgent,
             const size_t aTimeoutMiliseconds,
             const std::vector<std::string>& aHeaders,
